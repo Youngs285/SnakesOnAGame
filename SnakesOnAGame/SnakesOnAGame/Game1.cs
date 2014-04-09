@@ -23,7 +23,7 @@ namespace SnakesOnAGame
         List<Vector2> snake = new List<Vector2>();
 
         Vector2 velocity = new Vector2(0, -100);
-
+        
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
