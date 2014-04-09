@@ -19,8 +19,11 @@ namespace SnakesOnAGame
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Texture2D snakeTexture;
-
+        Random rand = new Random();
         List<Vector2> snake = new List<Vector2>();
+
+        Vector2 velocity = new Vector2(0, -100);
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -49,8 +52,8 @@ namespace SnakesOnAGame
             
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            snakeTexture = Content.Load<Texture2D>(@"Snake");
             snake.Add(new Vector2(40, 24));
-            snakeTexture = Content.Load<Texture2D>("Snake");
             // TODO: use this.Content to load your game content here
         }
 
@@ -81,19 +84,23 @@ namespace SnakesOnAGame
             KeyboardState kb = Keyboard.GetState();
             if (kb.IsKeyDown(Keys.Up))
             {
-
+                velocity.X = 0;
+                velocity.Y = -1;
             }
             if (kb.IsKeyDown(Keys.Down))
             {
-
+                velocity.X = 0;
+                velocity.Y = 1;
             } 
             if (kb.IsKeyDown(Keys.Left))
             {
-
+                velocity.X = -1;
+                velocity.Y = 0;
             } 
             if (kb.IsKeyDown(Keys.Right))
             {
-
+                velocity.X = 1;
+                velocity.Y = 0;
             }
 
         }
@@ -109,13 +116,15 @@ namespace SnakesOnAGame
             
             // TODO: Add your drawing code here
 
-            base.Draw(gameTime);
+
             spriteBatch.Begin();
             for (int i = 0; i < snake.Count; i++)
             {
-                spriteBatch.Draw(snakeTexture, snake[i] * 20, Color.Red);
+                spriteBatch.Draw(snakeTexture, snake[i] * 10, Color.Red);
+               
             }
             spriteBatch.End();
+            base.Draw(gameTime);
         }
     }
 }
