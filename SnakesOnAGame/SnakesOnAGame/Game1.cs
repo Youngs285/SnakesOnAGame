@@ -16,13 +16,13 @@ namespace SnakesOnAGame
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
+        List<Vector2> snake = new List<Vector2>();
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Texture2D snakeTexture;
         Random rand = new Random();
-        List<Vector2> snake = new List<Vector2>();
-
-        Vector2 velocity = new Vector2(0, -100);
+        
+        Vector2 velocity = new Vector2(0, 1);
         
         public Game1()
         {
@@ -36,7 +36,7 @@ namespace SnakesOnAGame
         /// related content.  Calling base.Initialize will enumerate through any components
         /// and initialize them as well.
         /// </summary>
-        protected override void Initialize()
+            protected override void Initialize()
         {
             // TODO: Add your initialization logic here
 
@@ -54,7 +54,8 @@ namespace SnakesOnAGame
             spriteBatch = new SpriteBatch(GraphicsDevice);
             snakeTexture = Content.Load<Texture2D>(@"Snake");
             snake.Add(new Vector2(40, 24));
-            // TODO: use this.Content to load your game content here
+            
+                // TODO: use this.Content to load your game content here
         }
 
         /// <summary>
@@ -81,28 +82,32 @@ namespace SnakesOnAGame
             
             base.Update(gameTime);
 
-            KeyboardState kb = Keyboard.GetState();
-            if (kb.IsKeyDown(Keys.Up))
-            {
-                velocity.X = 0;
-                velocity.Y = -1;
-            }
-            if (kb.IsKeyDown(Keys.Down))
-            {
-                velocity.X = 0;
-                velocity.Y = 1;
-            } 
-            if (kb.IsKeyDown(Keys.Left))
-            {
-                velocity.X = -1;
-                velocity.Y = 0;
-            } 
-            if (kb.IsKeyDown(Keys.Right))
-            {
-                velocity.X = 1;
-                velocity.Y = 0;
-            }
+                KeyboardState kb = Keyboard.GetState();
+                if (kb.IsKeyDown(Keys.Up))
+                {
 
+                    velocity.X = 0;
+                    velocity.Y = -1;
+                    snake[0] += velocity;
+                }
+                if (kb.IsKeyDown(Keys.Down))
+                {
+                    velocity.X = 0;
+                    velocity.Y = 1;
+                    snake[0] += velocity;
+                }
+                if (kb.IsKeyDown(Keys.Left))
+                {
+                    velocity.X = -1;
+                    velocity.Y = 0;
+                    snake[0] += velocity;
+                }
+                if (kb.IsKeyDown(Keys.Right))
+                {
+                    velocity = new Vector2(1, 0);
+                    snake[0] += velocity;
+                
+            }
         }
 
         /// <summary>
@@ -114,7 +119,7 @@ namespace SnakesOnAGame
             
             GraphicsDevice.Clear(Color.CornflowerBlue);
             
-            // TODO: Add your drawing code here
+            // your drawing code here
 
 
             spriteBatch.Begin();
