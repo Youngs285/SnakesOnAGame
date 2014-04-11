@@ -20,9 +20,16 @@ namespace SnakesOnAGame
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Texture2D snakeTexture;
+        Vector2 pellet = new Vector2  (1, 2);
         Random rand = new Random();
+        Texture2D pelletTexture;
+        Vector2 velocity = new Vector2(0, -1);
+        Vector2 location = new Vector2(1, 1);
         
-        Vector2 velocity = new Vector2(0, 1);
+
+
+        float snakeMovementTimer = 0f;
+        float snakeMovementTime = 60f; // ms between snake updates
         
         public Game1()
         {
@@ -53,6 +60,7 @@ namespace SnakesOnAGame
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             snakeTexture = Content.Load<Texture2D>(@"Snake");
+            pelletTexture = Content.Load<Texture2D>(@"PELLET");
             snake.Add(new Vector2(40, 24));
             
                 // TODO: use this.Content to load your game content here
@@ -79,8 +87,8 @@ namespace SnakesOnAGame
                 this.Exit();
 
             // TODO: Add your update logic here
+
             
-            base.Update(gameTime);
 
                 KeyboardState kb = Keyboard.GetState();
                 if (kb.IsKeyDown(Keys.Up))
@@ -88,27 +96,47 @@ namespace SnakesOnAGame
 
                     velocity.X = 0;
                     velocity.Y = -1;
-                    snake[0] += velocity;
+
                 }
                 if (kb.IsKeyDown(Keys.Down))
                 {
                     velocity.X = 0;
                     velocity.Y = 1;
-                    snake[0] += velocity;
+
                 }
                 if (kb.IsKeyDown(Keys.Left))
                 {
                     velocity.X = -1;
                     velocity.Y = 0;
-                    snake[0] += velocity;
+
                 }
                 if (kb.IsKeyDown(Keys.Right))
                 {
-                    velocity = new Vector2(1, 0);
+                    velocity.X = 1;
+                    velocity.Y = 0;
+
+
+                }
+
+                snakeMovementTimer += (float)gameTime.ElapsedGameTime.Milliseconds;
+
+                if (snakeMovementTimer > snakeMovementTime)
+                {
                     snake[0] += velocity;
+
+                    snakeMovementTimer = 0f;
+                }
+
+                if (snake[0] == pellet)
+                {
+                    pellet.X = rand.Next(5, 35);
+                    pellet.Y = rand.Next(5, 35);
+                     
+                }
                 
-            }
+                base.Update(gameTime);
         }
+        
 
         /// <summary>
         /// This is called when the game should draw itself.
@@ -117,7 +145,7 @@ namespace SnakesOnAGame
         protected override void Draw(GameTime gameTime)
         {
             
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Red);
             
             // your drawing code here
 
@@ -125,9 +153,11 @@ namespace SnakesOnAGame
             spriteBatch.Begin();
             for (int i = 0; i < snake.Count; i++)
             {
-                spriteBatch.Draw(snakeTexture, snake[i] * 10, Color.Red);
-               
+                spriteBatch.Draw(snakeTexture, snake[i] * 10, Color.Blue);
+                spriteBatch.Draw(pelletTexture, pellet * 10, Color.Green);
             }
+           
+
             spriteBatch.End();
             base.Draw(gameTime);
         }
