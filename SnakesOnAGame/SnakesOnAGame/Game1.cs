@@ -25,12 +25,9 @@ namespace SnakesOnAGame
         Texture2D pelletTexture;
         Vector2 velocity = new Vector2(0, -1);
         Vector2 location = new Vector2(1, 1);
-        
-
-
         float snakeMovementTimer = 0f;
         float snakeMovementTime = 60f; // ms between snake updates
-        
+       
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -131,7 +128,8 @@ namespace SnakesOnAGame
                 {
                     pellet.X = rand.Next(5, 35);
                     pellet.Y = rand.Next(5, 35);
-                     
+                    snake.Add( new Vector2(snake[0].X, snake[0].Y) );
+                    
                 }
                 
                 base.Update(gameTime);
@@ -145,8 +143,8 @@ namespace SnakesOnAGame
         protected override void Draw(GameTime gameTime)
         {
             
-            GraphicsDevice.Clear(Color.Red);
-            
+            GraphicsDevice.Clear(Color.Violet);
+                   
             // your drawing code here
 
 
@@ -156,7 +154,7 @@ namespace SnakesOnAGame
                 spriteBatch.Draw(snakeTexture, snake[i] * 10, Color.Blue);
                 spriteBatch.Draw(pelletTexture, pellet * 10, Color.Green);
             }
-           
+
 
             spriteBatch.End();
             base.Draw(gameTime);
