@@ -20,7 +20,7 @@ namespace SnakesOnAGame
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Texture2D snakeTexture;
-        Vector2 pellet = new Vector2  (1, 1);
+        Vector2 pellet = new Vector2  (30, 30);
         Random rand = new Random();
         Texture2D pelletTexture;
         Vector2 velocity = new Vector2(0, -1);
@@ -143,8 +143,8 @@ namespace SnakesOnAGame
 
                 if (snake[0] == pellet)
                 {
-                    pellet.X = rand.Next(10, 30);
-                    pellet.Y = rand.Next(10, 30);
+                    pellet.X = rand.Next(10, 40);
+                    pellet.Y = rand.Next(10, 40);
                     snake.Add( new Vector2(snake[0].X, snake[0].Y));
                     playerScore++;
                     this.Window.Title = "Score : " + playerScore.ToString();
